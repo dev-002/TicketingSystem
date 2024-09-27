@@ -1,0 +1,68 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif; /* Clean, professional font */
+}
+
+/* Loader */
+.spinner {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.1); /* Subtle background */
+}
+
+/* Button Styles */
+.form-btn {
+  width: 250px !important;
+  margin-top: 30px !important;
+  padding: 10px; /* Adjusted padding */
+  border-radius: 4px; /* Slightly rounded corners */
+  background-color: #007bff; /* Professional blue */
+  color: white; /* White text */
+  border: none; /* No border */
+  font-weight: 500; /* Medium weight */
+  font-size: 1rem; /* Consistent font size */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  cursor: pointer; /* Pointer cursor */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.form-btn:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: translateY(-1px); /* Subtle lift effect */
+}
+
+/* Input Styles */
+input {
+  padding: 10px; /* Padding for input fields */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 1rem; /* Consistent font size */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+input:focus {
+  border-color: #007bff; /* Focus border color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft shadow on focus */
+}
+
+/* Heading Styles */
+h1, h6 {
+  font-weight: 600; /* Medium weight for headings */
+  color: #333; /* Dark color for readability */
+}
+
+h1 {
+  margin-bottom: 20px; /* Space below main heading */
+  font-size: 2rem; /* Larger size for prominence */
+}
+
+h6 {
+  margin-bottom: 15px; /* Space below subheading */
+  font-size: 1.25rem; /* Slightly larger subheading */
+  color: #666; /* Softer color for subheadings */
+}

@@ -1,0 +1,109 @@
+.main {
+  padding: 20px;
+  height: 100vh;
+  background-color: #f8f9fa; /* Soft light background */
+}
+
+.Layout {
+  display: flex;
+}
+
+.sidebar {
+  height: calc(100vh - 40px); /* Adjusted to account for header space */
+  width: 350px;
+  border-radius: 10px; /* Softer corners */
+  background-color: #4b6eaf; /* Elegant blue */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-right: 30px;
+  padding: 20px; /* Added padding */
+  box-sizing: border-box; /* Ensures padding is included in height */
+}
+
+.content {
+  width: 100%;
+  height: calc(100vh - 40px); /* Same height as sidebar */
+  display: flex;
+  flex-direction: column; /* Stack header and body */
+}
+
+.header {
+  height: 10vh;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  border-radius: 10px; /* Softer corners */
+  padding: 10px 20px; /* Added padding */
+}
+
+.body {
+  flex: 1; /* Takes up remaining space in content area */
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  border-radius: 10px; /* Softer corners */
+  padding: 20px; /* Added padding */
+}
+
+.logo h6 {
+  font-size: 1.8rem; /* Increased font size */
+  margin: 20px 0;
+  text-align: center;
+  color: #333; /* Darker text for better readability */
+}
+
+menu {
+  margin-top: 50px;
+}
+
+.menu-item {
+  margin-top: 30px;
+}
+
+.menu-item a {
+  color: #ffffff; /* Consistent text color */
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s; /* Smooth transition for hover effects */
+}
+
+.menu-item i {
+  font-size: 1.2rem;
+  margin: 0 15px;
+}
+
+.active {
+  background-color: #ffffff;
+  color: #4b6eaf; /* Matching active state color */
+  padding: 10px;
+  border-radius: 5px; /* Softer corners */
+}
+
+.active a,
+.active i { /* Fixed selector for active */
+  color: #4b6eaf;
+}
+
+.header-content {
+  margin: 0 15px;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  justify-content: flex-end;
+}
+
+.header-content i {
+  margin-right: 20px;
+  font-size: 1.2rem;
+}
+
+.header-content a {
+  text-decoration: none;
+  color: #005bb5; /* Elegant blue */
+  margin: 0 10px;
+  text-transform: uppercase;
+  transition: color 0.3s; /* Smooth transition for hover effects */
+}
+
+.header-content a:hover {
+  color: #004494; /* Darker blue on hover */
+}
+
