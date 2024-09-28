@@ -8,7 +8,28 @@ const { Title } = Typography; // Destructure Title from Ant Design Typography
 
 const EngineerAppointment = () => {
   const [appointments, setAppointments] = useState([]);
+  const [engineerInfo, setengineerInfo] = useState({});
   const [loading, setLoading] = useState(true); // State for loading
+
+  const getEngineerInfo = async () => {
+    try {
+      const res = await axios.post(
+        "/api/v1/engineer/getEngineerInfo",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        setengineerInfo(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("Failed to fetch engineer info.");
+    }
+  };
 
   const getAppointments = async () => {
     try {
@@ -31,13 +52,14 @@ const EngineerAppointment = () => {
 
   useEffect(() => {
     getAppointments();
+    getEngineerInfo();
   }, []);
 
   const handleStatus = async (record, status) => {
     try {
       const res = await axios.post(
         "/api/v1/engineer/update-status",
-        { appointmentsId: record._id, status },
+        { appointmentsId: record._id, status, engineerInfo: engineerInfo },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -114,15 +136,17 @@ const EngineerAppointment = () => {
 
   return (
     <Layout>
-      <Title level={2} className="text-center mb-4">Appointment List</Title>
+      <Title level={2} className="text-center mb-4">
+        Appointment List
+      </Title>
       {loading ? (
         <div className="text-center">
           <Spin size="large" /> {/* Loader while fetching data */}
         </div>
       ) : (
-        <Table 
-          columns={columns} 
-          dataSource={appointments} 
+        <Table
+          columns={columns}
+          dataSource={appointments}
           rowKey="_id" // Ensure each row has a unique key
           pagination={{ pageSize: 10 }} // Optional: Control the number of items per page
         />

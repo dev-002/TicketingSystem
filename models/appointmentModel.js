@@ -8,19 +8,22 @@ const appointmentSchema = new mongoose.Schema(
     },
     engineerId: {
       type: String,
-      required: true,
+      default: null,
     },
-    date: {
+    appointmentDetails: {
+      date: { type: String, required: true },
+      details: {
+        type: String,
+        required: true,
+      },
+    },
+    status: {
       type: String,
       required: true,
     },
-    status:{
-        type:String,
-        required: true
-    },
-        engineerInfo: {
+    engineerInfo: {
       type: String,
-      required: true,
+      default: null,
     },
     userInfo: {
       type: String,

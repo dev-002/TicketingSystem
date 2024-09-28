@@ -1,6 +1,7 @@
 const engineerModel = require("../models/engineerModel");
 const appointmentModel = require("../models/appointmentModel");
 const userModel = require("../models/userModels");
+
 const getEngineerInfoController = async (req, res) => {
   try {
     const engineer = await engineerModel.findOne({ userId: req.body.userId });
@@ -65,7 +66,7 @@ const engineerAppointmentController = async (req, res) => {
   try {
     const engineer = await engineerModel.findOne({ userId: req.body.userId });
     const appointments = await appointmentModel.find({
-      engineerId: engineer._id,
+      $or: [{ engineerId: engineer._id }, { engineerId: null }],
     });
 
     res.status(200).send({
@@ -85,13 +86,13 @@ const engineerAppointmentController = async (req, res) => {
 
 const updateStatusController = async (req, res) => {
   try {
-    const { appointmentsId, status } = req.body;
+    const { appointmentsId, status, engineerInfo } = req.body;
     const appointments = await appointmentModel.findByIdAndUpdate(
       appointmentsId,
-      { status }
+      { engineerId: engineerInfo._id, status, engineerInfo }
     );
     const user = await userModel.findOne({ _id: appointments.userId });
-   const notification = user.notification;
+    const notification = user.notification;
     notification.push({
       type: "status updated",
       message: `your appointment has been updated`,
@@ -100,8 +101,8 @@ const updateStatusController = async (req, res) => {
     await user.save();
     res.status(200).send({
       success: true,
-      message: "appointment status updated"
-    })
+      message: "appointment status updated",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({

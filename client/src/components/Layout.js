@@ -16,38 +16,41 @@ const Layout = ({ children }) => {
     navigate("/login");
   };
 
-
-    // Engineer menu
-    const engineerMenu = [
-      {
-        name: "Home",
-        path: "/",
-        icon: "fa-solid fa-home", // Changed to more standard home icon
-      },
-      {
-        name: "Dashboard Insights",
-        path: "/dashboard-insights",
-        icon: "fa-solid fa-chart-line", // Changed to a chart icon for insights
-      },
-      {
-        name: "Profile",
-        path: "/engineer/profile/:id",
-        icon: "fa-solid fa-id-badge", // Changed to an ID badge for profile
-      },
-      {
-        name: "Appointments",
-        path: "/engineer-appointments",
-        icon: "fa-solid fa-calendar-check", // Changed to a calendar icon for appointments
-      },
-      {
-        name: "Search",
-        path: "/search",
-        icon: "fa-solid fa-search", // Standard search icon
-      },
-    ];
+  // Engineer menu
+  const engineerMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "fa-solid fa-home", // Changed to more standard home icon
+    },
+    {
+      name: "Dashboard Insights",
+      path: "/dashboard-insights",
+      icon: "fa-solid fa-chart-line", // Changed to a chart icon for insights
+    },
+    {
+      name: "Profile",
+      path: "/engineer/profile/:id",
+      icon: "fa-solid fa-id-badge", // Changed to an ID badge for profile
+    },
+    {
+      name: "Appointments",
+      path: "/engineer-appointments",
+      icon: "fa-solid fa-calendar-check", // Changed to a calendar icon for appointments
+    },
+    {
+      name: "Search",
+      path: "/search",
+      icon: "fa-solid fa-search", // Standard search icon
+    },
+  ];
 
   //rendering menu list
-  const SidebarMenu = user?.isAdmin? adminMenu: user?.isEngineer ? engineerMenu : userMenu;
+  const SidebarMenu = user?.isAdmin
+    ? adminMenu
+    : user?.isEngineer
+    ? engineerMenu
+    : userMenu;
   return (
     <>
       <div className="main">
@@ -58,15 +61,13 @@ const Layout = ({ children }) => {
               <hr />
             </div>
             <div className="menu">
-              {SidebarMenu.map((menu) => {
+              {SidebarMenu.map((menu, i) => {
                 const isActive = location.pathname === menu.path;
                 return (
-                  <>
-                    <div className={`menu-item ${isActive && "active"}`}>
-                      <i className={menu.icon}></i>
-                      <Link to={menu.path}>{menu.name}</Link>
-                    </div>
-                  </>
+                  <div key={i} className={`menu-item ${isActive && "active"}`}>
+                    <i className={menu.icon}></i>
+                    <Link to={menu.path}>{menu.name}</Link>
+                  </div>
                 );
               })}
               <div className={`menu-item `} onClick={handleLogout}>
@@ -85,7 +86,7 @@ const Layout = ({ children }) => {
                     navigate("/notification");
                   }}
                 >
-                  <i class="fa-regular fa-bell"></i>
+                  <i className="fa-regular fa-bell"></i>
                 </Badge>
                 <Link to="/profile">{user && user.name}</Link>
               </div>
