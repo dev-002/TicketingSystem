@@ -1,61 +1,108 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
-import { Row, Col, Typography, Spin } from "antd"; // Added Typography and Spin for better styling
-import EngineersList from "../components/EngineersList";
+import axios from "axios";
+import { DatePicker, message } from "antd";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
 
-const { Title } = Typography; // Destructure Title from Ant Design Typography
+const BookingPage = () => {
+  const { user } = useSelector((state) => state.user);
+  const [date, setDate] = useState();
+  const [details, setDetails] = useState("");
+  const dispatch = useDispatch();
 
-const HomePage = () => {
-  const [engineers, setEngineers] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading
+  const handleTextareaChange = (e) => {
+    setDetails(e.target.value);
+  };
 
-  // Fetch user data
-  const getUserData = async () => {
+  //login user data
+  // const getUserData = async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       "/api/v1/engineer/getEngineerById",
+  //       { engineerId: params.engineerId },
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + localStorage.getItem("token"),
+  //         },
+  //       }
+  //     );
+  //     if (res.data.success) {
+  //       setEngineers(res.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // ========booking function
+
+  const handleBooking = async () => {
     try {
-      const res = await axios.get("/api/v1/user/getAllEngineers", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+      dispatch(showLoading());
+      const res = await axios.post(
+        "/api/v1/user/book-appointment",
+        {
+          engineerId: null,
+          engineerInfo: null,
+          userId: user._id,
+          appointmentDetails: {
+            date: date,
+            details: details,
+          },
+          userInfo: user,
         },
-      });
-      if (res.data.success) {
-        setEngineers(res.data.data);
-      }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (res.data.success) message.success(res.data.message);
     } catch (error) {
+      dispatch(hideLoading());
       console.log(error);
-    } finally {
-      setLoading(false); // Stop loading regardless of success or failure
     }
   };
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
   return (
     <Layout>
-      <Title level={2} className="text-center mb-4">Create Issue</Title>
-      {loading ? (
-        <div className="text-center">
-          <Spin size="large" /> {/* Loader while fetching data */}
+      <h3>Booking Page</h3>
+      <div className="container m-4">
+        <div>
+          <div>
+            <h4>Select Date</h4>
+            <div className="d-flex flex-column w-50">
+              <DatePicker
+                className="m-2"
+                format="DD-MM-YY"
+                onChange={(value) =>
+                  setDate(moment(value).format("DD-MM-YYYY"))
+                }
+              />
+            </div>
+            <div>
+              <h4>Appointment Detials</h4>
+              <textarea
+                className="m-2 p-1"
+                value={details}
+                onChange={handleTextareaChange}
+                rows={5}
+                cols={43}
+                placeholder="Provide motive for Appointment"
+              />
+            </div>
+
+            <button className="btn btn-dark mt-2" onClick={handleBooking}>
+              Book Now
+            </button>
+          </div>
         </div>
-      ) : (
-        <Row gutter={[16, 16]} justify="center"> {/* Add spacing between items */}
-          {engineers.length > 0 ? (
-            engineers.map((engineer) => (
-              <Col xs={24} sm={12} md={8} lg={6} key={engineer.id}> {/* Responsive columns */}
-                <EngineersList engineer={engineer} />
-              </Col>
-            ))
-          ) : (
-            <Col span={24} className="text-center">
-              <p>No engineers found.</p>
-            </Col>
-          )}
-        </Row>
-      )}
+      </div>
     </Layout>
   );
 };
 
-export default HomePage;
+export default BookingPage;

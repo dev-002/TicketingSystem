@@ -3,8 +3,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const engineerModel = require("../models/engineerModel");
 const appointmentModel = require("../models/appointmentModel");
-const moment = require ('moment')
-//register callback
+const moment = require("moment");
+
+// register callback
 const registerController = async (req, res) => {
   try {
     const existingUser = await userModel.findOne({ email: req.body.email });
@@ -111,6 +112,7 @@ const applyEngineerController = async (req, res) => {
     });
   }
 };
+
 //notification ctrl
 const getAllNotificationController = async (req, res) => {
   try {
@@ -135,6 +137,7 @@ const getAllNotificationController = async (req, res) => {
     });
   }
 };
+
 //delete Notifications
 const deleteAllNotificationController = async (req, res) => {
   try {
@@ -180,21 +183,28 @@ const getAllEngineerController = async (req, res) => {
 //book appointment
 const bookAppointmentController = async (req, res) => {
   try {
-    req.body.date = moment(req.body.date, 'DD-MM-YYYY').toISOString()
-    req.body.status = "pending";
-    const newAppointment = new appointmentModel(req.body);
-    await newAppointment.save();
-    const user = await userModel.findOne({ _id: req.body.engineerInfo.userId });
-    user.notification.push({
-      type: "New-appointment-request",
-      message: `A new Appointment request from ${req.body.userInfo.name}`,
-      onClickPath: "/users/appointments",
-    });
-    await user.save();
-    res.status(200).send({
-      success: true,
-      message: "Appointment book successfully",
-    });
+    if (req.body.appointmentDetails) {
+      req.body.appointmentDetails.date = moment(
+        req.body.appointmentDetails?.date,
+        "DD-MM-YYYY"
+      ).toISOString();
+      req.body.status = "pending";
+      const newAppointment = new appointmentModel(req.body);
+      await newAppointment.save();
+      const engineers = await await userModel.find({ isEngineer: true });
+      engineers.forEach(async (engineer) => {
+        engineer.notification.push({
+          type: "New-appointment-request",
+          message: `A new Appointment request from ${req.body.userInfo.name}`,
+          onClickPath: "/users/appointments",
+        });
+        await engineer.save();
+      });
+      res.status(200).send({
+        success: true,
+        message: "Appointment book successfully",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({
