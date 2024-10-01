@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import Layout from "./../components/Layout";
 import axios from "axios";
 import moment from "moment";
-import { Table } from "antd";
-const Appointments = () => {
+import { Table, Input } from "antd";
+
+const Search = () => {
   const [appointments, setAppointments] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
   const getAppointments = async () => {
     try {
       const res = await axios.get("/api/v1/user/user-appointments", {
@@ -12,8 +15,7 @@ const Appointments = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      
-      // console.log(res.data); // Log the response data
+
       if (res.data.message === "User appointment fetch successfully") {
         setAppointments(res.data.data);
       }
@@ -26,11 +28,16 @@ const Appointments = () => {
     getAppointments();
   }, []);
 
+  // Filter appointments based on searchText
+  const filteredAppointments = appointments.filter(appointment =>
+    appointment._id.includes(searchText) 
+  );
+
   const columns = [
-    // {
-    //   title: "Appointment ID",
-    //   dataIndex: '_id',
-    // },
+    {
+      title: 'Appointment ID',
+      dataIndex: '_id', // Uncomment this line
+    },
     {
       title: 'User ID',
       dataIndex: 'userId',
@@ -53,8 +60,10 @@ const Appointments = () => {
       dataIndex: 'status',
     },
     {
-      title: 'project Name',
-      dataIndex: 'details',
+      title: "Project Name",
+      render: (text, record) => (
+        <span>{record.appointmentDetails?.projectName || "N/A"}</span>
+      ),
     },
     {
       title: 'Created At',
@@ -75,13 +84,23 @@ const Appointments = () => {
       ),
     },
   ];
-  
+
   return (
     <Layout>
-      <h1>Dashboard Insights</h1>
-      <Table columns={columns} dataSource={appointments} />
+      <h1>Search</h1>
+      <Input 
+        placeholder="Search by Appointment ID" 
+        value={searchText} 
+        onChange={(e) => setSearchText(e.target.value)} 
+        style={{ marginBottom: 16 }} 
+      />
+       {searchText && filteredAppointments.length > 0 ? (
+        <Table columns={columns} dataSource={filteredAppointments} />
+      ) : (
+        searchText && <p>No Tickets found.</p>
+      )}
     </Layout>
   );
 };
 
-export default Appointments;
+export default Search;

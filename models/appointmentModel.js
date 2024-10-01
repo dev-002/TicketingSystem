@@ -6,6 +6,10 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    projectName: {
+      type: String,
+      required: true,
+    },
     engineerId: {
       type: String,
       default: null,

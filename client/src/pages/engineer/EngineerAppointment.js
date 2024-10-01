@@ -81,6 +81,7 @@ const EngineerAppointment = () => {
       title: "Appointment ID",
       dataIndex: "_id",
     },
+    
     {
       title: "User ID",
       dataIndex: "userId",
@@ -97,6 +98,12 @@ const EngineerAppointment = () => {
     {
       title: "Status",
       dataIndex: "status",
+    },
+    {
+      title: "Project Name",
+      render: (text, record) => (
+        <span>{record.appointmentDetails?.projectName || "N/A"}</span>
+      ),
     },
     {
       title: "Actions",
@@ -141,14 +148,14 @@ const EngineerAppointment = () => {
       </Title>
       {loading ? (
         <div className="text-center">
-          <Spin size="large" /> {/* Loader while fetching data */}
+          <Spin size="large" />
         </div>
       ) : (
         <Table
           columns={columns}
           dataSource={appointments}
-          rowKey="_id" // Ensure each row has a unique key
-          pagination={{ pageSize: 10 }} // Optional: Control the number of items per page
+          rowKey="_id"
+          pagination={{ pageSize: 10 }}
         />
       )}
     </Layout>

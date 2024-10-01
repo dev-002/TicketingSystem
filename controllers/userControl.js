@@ -47,9 +47,11 @@ const loginController = async (req, res) => {
         .status(200)
         .send({ message: "Invalid Email or Password", success: false });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id  }, process.env.JWT_SECRET, {
+
       expiresIn: "1d",
     });
+    
     res.status(200).send({ message: "Login Success", success: true, token });
   } catch (error) {
     console.log(error);
@@ -183,6 +185,7 @@ const getAllEngineerController = async (req, res) => {
 //book appointment
 const bookAppointmentController = async (req, res) => {
   try {
+    console.log(req.body.appointmentDetails)
     if (req.body.appointmentDetails) {
       req.body.appointmentDetails.date = moment(
         req.body.appointmentDetails?.date,

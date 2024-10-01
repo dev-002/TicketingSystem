@@ -6,10 +6,11 @@
 
 .Layout {
   display: flex;
+  height: 100%;
 }
 
 .sidebar {
-  height: calc(100vh - 40px); /* Adjusted to account for header space */
+  /* height: 125vh; Adjusted to account for header space */
   width: 350px;
   border-radius: 10px; /* Softer corners */
   background-color: #4b6eaf; /* Elegant blue */
@@ -20,6 +21,7 @@
 }
 
 .content {
+  flex: 1;
   width: 100%;
   height: calc(100vh - 40px); /* Same height as sidebar */
   display: flex;
@@ -41,6 +43,7 @@
   background-color: #ffffff;
   border-radius: 10px; /* Softer corners */
   padding: 20px; /* Added padding */
+  overflow-y: auto;
 }
 
 .logo h6 {

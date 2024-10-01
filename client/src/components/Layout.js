@@ -9,6 +9,7 @@ const Layout = ({ children }) => {
   const { user } = useSelector((state) => state.user);
   const location = useLocation();
   const navigate = useNavigate();
+  
   //logout function
   const handleLogout = () => {
     localStorage.clear();
@@ -18,30 +19,25 @@ const Layout = ({ children }) => {
 
   // Engineer menu
   const engineerMenu = [
-    {
-      name: "Home",
-      path: "/",
-      icon: "fa-solid fa-home", // Changed to more standard home icon
-    },
+    // {
+    //   name: "Home",
+    //   path: "/engineer-appointments",
+    //   icon: "fa-solid fa-home", 
+    // },
     {
       name: "Dashboard Insights",
-      path: "/dashboard-insights",
-      icon: "fa-solid fa-chart-line", // Changed to a chart icon for insights
+      path: "/engineer-appointments",
+      icon: "fa-solid fa-chart-line", 
     },
     {
       name: "Profile",
       path: "/engineer/profile/:id",
-      icon: "fa-solid fa-id-badge", // Changed to an ID badge for profile
-    },
-    {
-      name: "Appointments",
-      path: "/engineer-appointments",
-      icon: "fa-solid fa-calendar-check", // Changed to a calendar icon for appointments
+      icon: "fa-solid fa-id-badge",
     },
     {
       name: "Search",
       path: "/search",
-      icon: "fa-solid fa-search", // Standard search icon
+      icon: "fa-solid fa-search", 
     },
   ];
 
@@ -86,9 +82,9 @@ const Layout = ({ children }) => {
                     navigate("/notification");
                   }}
                 >
-                  <i className="fa-regular fa-bell"></i>
-                </Badge>
-                <Link to="/profile">{user && user.name}</Link>
+                  <i className="fa-regular fa-bell m-2"></i>
+                </Badge> Hi 
+                <Link to="/profile"> {user && user.name}</Link>
               </div>
             </div>
             <div className="body">{children}</div>

@@ -45,3 +45,4 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/login" />;
   }
 }
+

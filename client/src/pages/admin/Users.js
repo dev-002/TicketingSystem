@@ -32,9 +32,19 @@ useEffect(() => {
 //antD table col
 const columns = [
   {
-    title : 'Name',
-    dataIndex: 'name'
+    title: "Name",
+    dataIndex: "name",
+    render: (text, record) => (
+      <span>
+        {record.firstName} {record.lastName}
+      </span>
+    ),
   },
+  { 
+    title: 'Last Name',
+    dataIndex: 'lastName'
+  },
+  
   {
     title : 'Email',
     dataIndex : 'email'
@@ -46,6 +56,10 @@ const columns = [
   {
     title : 'Created at',
     dataIndex : 'createdAt'
+  },
+  {
+    title : 'project name',
+    dataIndex : 'details'
   },
   {
     title : 'Actions',

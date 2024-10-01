@@ -24,16 +24,7 @@ export const userMenu = [
 
 //admin menu
 export const adminMenu = [
-  {
-    name: "Home",
-    path: "/",
-    icon: "fa-solid fa-house-user",
-  },
-  {
-    name: "Dashboard Insights",
-    path: "/dashboard-insights",
-    icon: "fa-solid fa-list-ul",
-  },
+  
   {
     name: "Users",
     path: "/admin/users",
@@ -44,12 +35,6 @@ export const adminMenu = [
     path: "/admin/engineers",
     icon: "fa-solid fa-list-ul",
   },
-  {
-    name: "Profile",
-    path: "/profile",
-    icon: "fa-solid fa-user",
-  },
-
   {
     name: "Search",
     path: "/search",

@@ -62,6 +62,10 @@ const Engineers = () => {
       dataIndex: "createdAt",
     },
     {
+      title: "Created at",
+      dataIndex: "projectName",
+    },
+    {
       title: "Status",
       dataIndex: "status",
     },
